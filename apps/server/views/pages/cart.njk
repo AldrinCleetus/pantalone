@@ -1,0 +1,50 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+<div class="wrap">
+  <section class="page-intro">
+    <h1 class="page-title">Your cart</h1>
+    <p class="sub">Everything is printed to order. Prices and shipping are always calculated fresh from our database.</p>
+  </section>
+
+  <div id="cart-alert" class="alert-box" role="status" aria-live="polite" hidden></div>
+
+  <div class="two-col" id="cart-layout">
+    <div>
+      <div id="cart-loading" class="panel-card">Loading your cart…</div>
+      <div id="cart-empty" class="panel-card" hidden>
+        <h2>Your cart is empty</h2>
+        <p class="sub">Pick a mask, prop, or desk dragon to get started.</p>
+        <a class="btn" href="/shop">Browse the shop</a>
+      </div>
+      <ul class="cart-list" id="cart-items" aria-label="Cart items"></ul>
+    </div>
+
+    <aside class="panel-card" id="cart-summary" aria-labelledby="summary-heading" hidden>
+      <h2 id="summary-heading">Order summary</h2>
+      <div class="summary-lines">
+        <div class="summary-line">
+          <span>Subtotal</span>
+          <strong id="summary-subtotal">₹0</strong>
+        </div>
+        <div class="summary-line">
+          <span>Shipping (provisional)</span>
+          <strong id="summary-shipping">₹0</strong>
+        </div>
+        <div class="summary-line summary-total">
+          <span>Total</span>
+          <strong id="summary-total">₹0</strong>
+        </div>
+      </div>
+      <p class="field-hint" id="summary-note"></p>
+      <div class="btns">
+        <a class="btn" href="/checkout" style="width: 100%;">Proceed to checkout</a>
+      </div>
+    </aside>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="/js/cart.js"></script>
+{% endblock %}

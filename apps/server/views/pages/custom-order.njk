@@ -1,0 +1,114 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+<div class="wrap">
+  <section class="page-intro">
+    <h1 class="page-title">Custom order</h1>
+    <p class="sub">Need a specific mask, prop, sizing tweak, or colour scheme? Tell me what you’re building and I’ll reply within a day.</p>
+  </section>
+
+  <div class="two-col">
+    <form
+      class="panel-card"
+      id="custom-order-form"
+      action="/custom-order"
+      method="POST"
+      novalidate
+      aria-labelledby="custom-form-heading"
+    >
+      <h2 id="custom-form-heading">Tell me about your piece</h2>
+
+      {% if submitted %}
+      <div class="alert-box success" role="status">
+        Request received! I’ll review your details and reply soon.
+      </div>
+      {% endif %}
+      {% if formError %}
+      <div class="alert-box error" role="alert">{{ formError }}</div>
+      {% endif %}
+
+      <div id="custom-status" class="alert-box" role="status" aria-live="polite" hidden></div>
+
+      <div class="hp-field" aria-hidden="true">
+        <label for="website">Leave this blank</label>
+        <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+      </div>
+
+      <div class="field">
+        <label for="custom-name">Your name <span class="req" aria-hidden="true">*</span></label>
+        <input
+          type="text"
+          id="custom-name"
+          name="name"
+          autocomplete="name"
+          required
+          minlength="2"
+          value="{{ formValues.name | default('') }}"
+          aria-describedby="err-custom-name"
+        >
+        <span class="field-error" id="err-custom-name"></span>
+      </div>
+
+      <div class="field">
+        <label for="custom-contact">WhatsApp, email, or Instagram <span class="req" aria-hidden="true">*</span></label>
+        <input
+          type="text"
+          id="custom-contact"
+          name="contact"
+          required
+          minlength="5"
+          value="{{ formValues.contact | default('') }}"
+          aria-describedby="hint-custom-contact err-custom-contact"
+        >
+        <span class="field-hint" id="hint-custom-contact">So I can send you a quote and timeline.</span>
+        <span class="field-error" id="err-custom-contact"></span>
+      </div>
+
+      <div class="field">
+        <label for="custom-ref">Reference link (optional)</label>
+        <input
+          type="url"
+          id="custom-ref"
+          name="referenceUrl"
+          inputmode="url"
+          autocorrect="off"
+          autocapitalize="none"
+          spellcheck="false"
+          value="{{ formValues.referenceUrl | default('') }}"
+          aria-describedby="hint-custom-ref err-custom-ref"
+        >
+        <span class="field-hint" id="hint-custom-ref">Link to a character image, STL file, or sketch (https://...).</span>
+        <span class="field-error" id="err-custom-ref"></span>
+      </div>
+
+      <div class="field">
+        <label for="custom-details">Size, finish &amp; target date <span class="req" aria-hidden="true">*</span></label>
+        <textarea
+          id="custom-details"
+          name="details"
+          required
+          minlength="10"
+          aria-describedby="err-custom-details"
+        >{{ formValues.details | default('') }}</textarea>
+        <span class="field-error" id="err-custom-details"></span>
+      </div>
+
+      <button class="btn" id="custom-submit" type="submit">Send custom request</button>
+    </form>
+
+    <aside class="panel-card">
+      <h2>What helps me quote fast</h2>
+      <ul>
+        <li>Character or prop name + a clear reference photo</li>
+        <li>Head circumference or height/length in centimetres</li>
+        <li>Whether you want it raw (for sanding) or finished and painted</li>
+        <li>Any convention or event deadline in India</li>
+      </ul>
+    </aside>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="/js/custom-order.js"></script>
+{% endblock %}

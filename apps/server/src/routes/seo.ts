@@ -34,6 +34,10 @@ seoRouter.get("/sitemap.xml", async (_req, res) => {
   const urls = [
     { loc: `${storeConfig.baseUrl}/`, lastmod: null as string | null },
     { loc: `${storeConfig.baseUrl}/shop`, lastmod: null as string | null },
+    { loc: `${storeConfig.baseUrl}/custom-order`, lastmod: null as string | null },
+    { loc: `${storeConfig.baseUrl}/about`, lastmod: null as string | null },
+    { loc: `${storeConfig.baseUrl}/shipping-returns`, lastmod: null as string | null },
+    { loc: `${storeConfig.baseUrl}/contact`, lastmod: null as string | null },
     ...productRows.map((row) => ({
       loc: `${storeConfig.baseUrl}/shop/${encodeURIComponent(row.slug)}`,
       lastmod: row.createdAt.toISOString(),

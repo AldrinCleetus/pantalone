@@ -50,9 +50,9 @@
     </a>
     <nav class="primary-nav" aria-label="Primary">
       <a href="/shop" {% if activeNav == 'shop' %}aria-current="page"{% endif %}>Shop</a>
-      <a href="/#maker">About me</a>
-      <a href="/#custom">Custom orders</a>
-      <a class="cart-pill" href="/shop" data-cart-count>Cart (0)</a>
+      <a href="/custom-order" {% if activeNav == 'custom' %}aria-current="page"{% endif %}>Custom orders</a>
+      <a href="/about" {% if activeNav == 'about' %}aria-current="page"{% endif %}>About</a>
+      <a class="cart-pill" href="/cart" data-cart-count {% if activeNav == 'cart' %}aria-current="page"{% endif %}>Cart (0)</a>
     </nav>
   </header>
 
@@ -67,7 +67,9 @@
     </div>
     <div class="footer-links">
       <a href="/shop">Shop</a>
-      <a href="/#custom">Custom orders</a>
+      <a href="/custom-order">Custom orders</a>
+      <a href="/shipping-returns">Shipping &amp; returns</a>
+      <a href="/contact">Contact</a>
       <button class="theme-btn" id="theme-toggle" type="button">Switch to dark theme</button>
     </div>
   </footer>

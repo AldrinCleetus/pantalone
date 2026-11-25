@@ -1,6 +1,8 @@
 import { Router } from "express";
-import { storeConfig } from "../config/store.js";
+import { formatInr, storeConfig } from "../config/store.js";
 import { getProductBySlug, listActiveProducts } from "../services/catalog.js";
+import { createCustomRequest } from "../services/customRequests.js";
+import { customRequestSchema } from "./api.js";
 
 export const storefrontRouter = Router();
 
@@ -17,6 +19,8 @@ function splitBrandName(name: string): { first: string; rest: string } {
 storefrontRouter.use((_req, res, next) => {
   res.locals.store = {
     ...storeConfig,
+    flatShippingFormatted: formatInr(storeConfig.flatShippingPaise),
+    freeShippingThresholdFormatted: formatInr(storeConfig.freeShippingThresholdPaise),
     nameParts: splitBrandName(storeConfig.name),
   };
   res.locals.ogImageUrl = `${storeConfig.baseUrl}${storeConfig.ogImagePath}`;
@@ -169,5 +173,99 @@ storefrontRouter.get("/shop/:slug", async (req, res) => {
     product,
     productJsonLd,
     breadcrumbJsonLd,
+  });
+});
+
+storefrontRouter.get("/cart", (_req, res) => {
+  res.setHeader("X-Robots-Tag", "noindex, nofollow");
+  res.render("pages/cart.njk", {
+    pageTitle: `Cart — ${storeConfig.name}`,
+    pageDescription: "Review your made-to-order 3D print cart.",
+    canonicalUrl: `${storeConfig.baseUrl}/cart`,
+    noindex: true,
+    activeNav: "cart",
+  });
+});
+
+storefrontRouter.get("/checkout", (_req, res) => {
+  res.setHeader("X-Robots-Tag", "noindex, nofollow");
+  res.render("pages/checkout.njk", {
+    pageTitle: `Checkout — ${storeConfig.name}`,
+    pageDescription: "Enter your shipping details to place your order.",
+    canonicalUrl: `${storeConfig.baseUrl}/checkout`,
+    noindex: true,
+    activeNav: "cart",
+  });
+});
+
+storefrontRouter.get("/custom-order", (_req, res) => {
+  res.render("pages/custom-order.njk", {
+    pageTitle: `Custom orders — ${storeConfig.name}`,
+    pageDescription:
+      "Request a custom 3D-printed cosplay prop, mask, or print-on-demand piece in India.",
+    canonicalUrl: `${storeConfig.baseUrl}/custom-order`,
+    activeNav: "custom",
+    formValues: {},
+  });
+});
+
+storefrontRouter.post("/custom-order", async (req, res) => {
+  const parsed = customRequestSchema.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).render("pages/custom-order.njk", {
+      pageTitle: `Custom orders — ${storeConfig.name}`,
+      pageDescription:
+        "Request a custom 3D-printed cosplay prop, mask, or print-on-demand piece in India.",
+      canonicalUrl: `${storeConfig.baseUrl}/custom-order`,
+      activeNav: "custom",
+      formError: "Please fill out all required fields with a valid reference link (if provided).",
+      formValues: req.body ?? {},
+    });
+    return;
+  }
+
+  if (!parsed.data.website || parsed.data.website.trim().length === 0) {
+    await createCustomRequest({
+      name: parsed.data.name,
+      contact: parsed.data.contact,
+      details: parsed.data.details,
+      referenceUrl: parsed.data.referenceUrl,
+    });
+  }
+
+  res.render("pages/custom-order.njk", {
+    pageTitle: `Custom orders — ${storeConfig.name}`,
+    pageDescription:
+      "Request a custom 3D-printed cosplay prop, mask, or print-on-demand piece in India.",
+    canonicalUrl: `${storeConfig.baseUrl}/custom-order`,
+    activeNav: "custom",
+    submitted: true,
+    formValues: {},
+  });
+});
+
+storefrontRouter.get("/about", (_req, res) => {
+  res.render("pages/about.njk", {
+    pageTitle: `About — ${storeConfig.name}`,
+    pageDescription: `How ${storeConfig.name} designs, 3D prints, sands, paints, and ships made-to-order props in India.`,
+    canonicalUrl: `${storeConfig.baseUrl}/about`,
+    activeNav: "about",
+  });
+});
+
+storefrontRouter.get("/shipping-returns", (_req, res) => {
+  res.render("pages/shipping-returns.njk", {
+    pageTitle: `Shipping & returns — ${storeConfig.name}`,
+    pageDescription:
+      "Made-to-order dispatch times, Indian shipping rates, and transit damage policy.",
+    canonicalUrl: `${storeConfig.baseUrl}/shipping-returns`,
+  });
+});
+
+storefrontRouter.get("/contact", (_req, res) => {
+  res.render("pages/contact.njk", {
+    pageTitle: `Contact — ${storeConfig.name}`,
+    pageDescription: `Get in touch with ${storeConfig.name} about custom orders or existing prints.`,
+    canonicalUrl: `${storeConfig.baseUrl}/contact`,
   });
 });

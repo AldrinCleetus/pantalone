@@ -1,0 +1,199 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+<div class="wrap">
+  <section class="page-intro">
+    <h1 class="page-title">Checkout</h1>
+    <p class="sub">Ships across India. No account required — fill your delivery address to create your order.</p>
+  </section>
+
+  <div id="checkout-empty" class="panel-card" hidden>
+    <h2>Your cart is empty</h2>
+    <p class="sub">Add a piece from the shop before checking out.</p>
+    <a class="btn" href="/shop">Back to shop</a>
+  </div>
+
+  <div id="checkout-confirmation" class="panel-card" hidden>
+    <h2>Pending order created</h2>
+    <div class="alert-box success" role="status">
+      Order <strong id="confirmed-number"></strong> saved (<span id="confirmed-status"></span>).
+    </div>
+    <p>
+      Total computed by server: <strong id="confirmed-total"></strong>.
+      Razorpay online payment popup will connect here in <strong>M3</strong>.
+    </p>
+    <ul id="confirmed-items" class="cart-list" style="margin: 18px 0;"></ul>
+    <div class="btns">
+      <a class="btn" href="/shop">Continue browsing</a>
+    </div>
+  </div>
+
+  <div class="two-col" id="checkout-layout">
+    <form class="panel-card" id="checkout-form" novalidate aria-labelledby="checkout-form-heading">
+      <h2 id="checkout-form-heading">Delivery details</h2>
+      <div id="checkout-error-summary" class="alert-box error" role="alert" tabindex="-1" hidden></div>
+
+      <fieldset class="form-fieldset">
+        <legend>Contact</legend>
+        <div class="field">
+          <label for="customerName">Full name <span class="req" aria-hidden="true">*</span></label>
+          <input
+            type="text"
+            id="customerName"
+            name="customerName"
+            autocomplete="name"
+            required
+            minlength="2"
+            enterkeyhint="next"
+            aria-describedby="err-customerName"
+          >
+          <span class="field-error" id="err-customerName"></span>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="phone">Phone (WhatsApp preferred) <span class="req" aria-hidden="true">*</span></label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              autocomplete="tel"
+              inputmode="tel"
+              required
+              enterkeyhint="next"
+              aria-describedby="hint-phone err-phone"
+            >
+            <span class="field-hint" id="hint-phone">10-digit Indian mobile number for courier updates.</span>
+            <span class="field-error" id="err-phone"></span>
+          </div>
+
+          <div class="field">
+            <label for="email">Email <span class="req" aria-hidden="true">*</span></label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              autocomplete="email"
+              inputmode="email"
+              autocorrect="off"
+              autocapitalize="none"
+              spellcheck="false"
+              required
+              enterkeyhint="next"
+              aria-describedby="err-email"
+            >
+            <span class="field-error" id="err-email"></span>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-fieldset">
+        <legend>Indian shipping address</legend>
+        <div class="field">
+          <label for="addressLine1">House / flat / street address <span class="req" aria-hidden="true">*</span></label>
+          <input
+            type="text"
+            id="addressLine1"
+            name="addressLine1"
+            autocomplete="address-line1"
+            required
+            minlength="5"
+            enterkeyhint="next"
+            aria-describedby="err-addressLine1"
+          >
+          <span class="field-error" id="err-addressLine1"></span>
+        </div>
+
+        <div class="field">
+          <label for="addressLine2">Landmark / area (optional)</label>
+          <input
+            type="text"
+            id="addressLine2"
+            name="addressLine2"
+            autocomplete="address-line2"
+            enterkeyhint="next"
+          >
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="city">City <span class="req" aria-hidden="true">*</span></label>
+            <input
+              type="text"
+              id="city"
+              name="city"
+              autocomplete="address-level2"
+              required
+              minlength="2"
+              enterkeyhint="next"
+              aria-describedby="err-city"
+            >
+            <span class="field-error" id="err-city"></span>
+          </div>
+
+          <div class="field">
+            <label for="state">State <span class="req" aria-hidden="true">*</span></label>
+            <input
+              type="text"
+              id="state"
+              name="state"
+              autocomplete="address-level1"
+              required
+              minlength="2"
+              enterkeyhint="next"
+              aria-describedby="err-state"
+            >
+            <span class="field-error" id="err-state"></span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="pincode">PIN code <span class="req" aria-hidden="true">*</span></label>
+          <input
+            type="text"
+            id="pincode"
+            name="pincode"
+            autocomplete="postal-code"
+            inputmode="numeric"
+            pattern="\d{6}"
+            maxlength="6"
+            required
+            enterkeyhint="done"
+            aria-describedby="hint-pincode err-pincode"
+          >
+          <span class="field-hint" id="hint-pincode">6-digit Indian PIN code (e.g., 682001).</span>
+          <span class="field-error" id="err-pincode"></span>
+        </div>
+      </fieldset>
+
+      <button class="btn" id="checkout-submit" type="submit">Create pending order</button>
+    </form>
+
+    <aside class="panel-card" aria-labelledby="checkout-summary-heading">
+      <h2 id="checkout-summary-heading">Order summary</h2>
+      <ul class="cart-list" id="checkout-items" style="margin-bottom: 18px;"></ul>
+      <div class="summary-lines">
+        <div class="summary-line">
+          <span>Subtotal</span>
+          <strong id="checkout-subtotal">₹0</strong>
+        </div>
+        <div class="summary-line">
+          <span>Shipping (provisional)</span>
+          <strong id="checkout-shipping">₹0</strong>
+        </div>
+        <div class="summary-line summary-total">
+          <span>Total</span>
+          <strong id="checkout-total">₹0</strong>
+        </div>
+      </div>
+      <p class="field-hint">
+        Final total is always recalculated on our server from live database prices.
+      </p>
+    </aside>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="/js/checkout.js"></script>
+{% endblock %}

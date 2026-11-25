@@ -19,6 +19,8 @@ export default tseslint.config(
         console: "readonly",
         setTimeout: "readonly",
         clearTimeout: "readonly",
+        fetch: "readonly",
+        FormData: "readonly",
       },
     },
   },

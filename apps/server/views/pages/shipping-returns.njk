@@ -1,0 +1,31 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+<div class="wrap prose-page">
+  <section class="page-intro">
+    <h1 class="page-title">Shipping &amp; returns</h1>
+    <p class="sub">Made-to-order timelines and delivery across India.</p>
+  </section>
+
+  <div class="prose-card">
+    <h2>Print &amp; dispatch time</h2>
+    <p>
+      Every piece is printed after you place your order. Most unpainted prints ship in 2–4 days; hand-painted and weathered pieces take 5–7 days depending on drying and clear-coat curing.
+    </p>
+  </div>
+
+  <div class="prose-card">
+    <h2>Shipping rates (provisional)</h2>
+    <p>
+      Orders ship across India via tracked courier. Currently configured with a provisional flat rate of {{ store.flatShippingFormatted }} (free above {{ store.freeShippingThresholdFormatted }}) while final courier tiers are being locked in.
+    </p>
+  </div>
+
+  <div class="prose-card">
+    <h2>Returns &amp; transit damage</h2>
+    <p>
+      Final returns policy for made-to-order pieces is being finalized. If a print arrives cracked or damaged in transit, reach out within 48 hours with a photo so I can fix or reprint it.
+    </p>
+  </div>
+</div>
+{% endblock %}
