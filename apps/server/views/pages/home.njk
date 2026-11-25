@@ -1,0 +1,109 @@
+{% extends "layout.njk" %}
+
+{% block jsonLd %}
+<script type="application/ld+json">{{ orgJsonLd | safe }}</script>
+{% endblock %}
+
+{% block content %}
+<div class="wrap">
+  <section class="hero">
+    <div>
+      <h1>I print it.<br>You wear it.</h1>
+      <p class="lede">
+        Cosplay props and 3D-printed pieces, made one at a time in {{ store.makerLocation }}. Every order is sanded, painted and packed by me.
+      </p>
+      <div class="btns">
+        <a class="btn" href="/shop">See what’s printing</a>
+        <a class="btn alt" href="#custom">Ask for something custom</a>
+      </div>
+    </div>
+    <div class="bed" role="img" aria-label="Illustration of a dome-shaped 3D print in progress on a build plate">
+      <svg viewBox="0 0 360 390" aria-hidden="true">
+        <path d="M60 330 Q60 118 180 88 Q300 118 300 330Z" fill="none" stroke="currentColor" stroke-opacity=".35" stroke-width="2.5" stroke-dasharray="7 7"/>
+        <rect x="20" y="330" width="320" height="26" rx="6" fill="currentColor"/>
+        <rect x="20" y="356" width="320" height="8" fill="#F0306E"/>
+      </svg>
+      <div class="printed" id="printed" aria-hidden="true">
+        <svg viewBox="0 0 360 390" aria-hidden="true">
+          <defs>
+            <pattern id="layer-lines" width="10" height="10" patternUnits="userSpaceOnUse">
+              <rect width="10" height="5" fill="#F0306E"/>
+              <rect y="5" width="10" height="5" fill="#D6205A"/>
+            </pattern>
+          </defs>
+          <path d="M60 330 Q60 118 180 88 Q300 118 300 330Z" fill="url(#layer-lines)" stroke="#1B1648" stroke-width="3"/>
+          <path d="M120 210 Q150 160 180 175 Q210 160 240 210 Q210 195 180 205 Q150 195 120 210Z" fill="#FFC83D" stroke="#1B1648" stroke-width="3"/>
+        </svg>
+      </div>
+      <div class="nozzle" id="nozzle" aria-hidden="true"></div>
+      <div class="print-status" id="status">Printing layer <b>0</b> of 480</div>
+    </div>
+  </section>
+</div>
+
+<section class="maker" id="maker" aria-labelledby="maker-heading">
+  <div class="wrap">
+    <div class="photo">Maker photo goes here.<br>Face, hands, or the workbench.</div>
+    <div>
+      <h2 id="maker-heading">Hi, welcome to {{ store.name }}.</h2>
+      <p>
+        I got a 3D printer for one cosplay build and never stopped. Now I design, print, sand and paint everything in this shop myself, usually with a half-finished helmet next to my keyboard.
+      </p>
+      <p>
+        When you order, you’re talking to one person, not a warehouse. If a piece cracks in transit, message me and I’ll fix it or reprint it.
+      </p>
+      <div class="sign">{{ store.name }}</div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <section class="shop-section" id="shop" aria-labelledby="shelf-heading">
+    <h2 class="sec" id="shelf-heading">On the shelf right now</h2>
+    <p class="sub">Each piece is made to order, so it ships 2 to 7 days after you buy.</p>
+    <div class="grid uneven">
+      {% for product in featuredProducts %}
+        {% include "partials/product-card.njk" %}
+      {% endfor %}
+    </div>
+    <div class="btns" style="margin-top: 28px;">
+      <a class="btn alt" href="/shop">Browse all {{ totalProducts }} pieces</a>
+    </div>
+  </section>
+
+  <section class="how" aria-labelledby="how-heading">
+    <h2 class="sec" id="how-heading">How your order gets made</h2>
+    <p class="sub">There’s no stock sitting in a warehouse, so here’s what happens after you pay.</p>
+    <div class="steps">
+      <div class="step">
+        <h3>I slice it</h3>
+        <p>Your size and colour go into the printer’s queue the same day.</p>
+      </div>
+      <div class="step">
+        <h3>It prints</h3>
+        <p>Anywhere from 6 to 30 hours, depending on the piece.</p>
+      </div>
+      <div class="step">
+        <h3>I finish it</h3>
+        <p>Sanding, priming and paint, by hand.</p>
+      </div>
+      <div class="step">
+        <h3>It ships</h3>
+        <p>Packed with a note and tracked all the way to you.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="custom" id="custom" aria-labelledby="custom-heading">
+    <div>
+      <h2 id="custom-heading">Got a character in mind?</h2>
+      <p>Send me a reference and your size. I’ll reply within a day with a price and a timeline.</p>
+    </div>
+    <a class="btn gold" href="/shop">Explore custom-ready pieces</a>
+  </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="/js/hero-print.js"></script>
+{% endblock %}

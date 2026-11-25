@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#1B1648"/>
+  <rect x="44" y="44" width="1112" height="542" rx="28" fill="#EEF2FA" stroke="#F0306E" stroke-width="12"/>
+  <rect x="110" y="420" width="340" height="36" rx="10" fill="#1B1648"/>
+  <rect x="110" y="456" width="340" height="12" fill="#F0306E"/>
+  <path d="M160 420 Q160 200 280 165 Q400 200 400 420Z" fill="#F0306E" stroke="#1B1648" stroke-width="10"/>
+  <text x="520" y="290" font-family="system-ui, sans-serif" font-weight="900" font-size="78" fill="#1B1648">I print it.</text>
+  <text x="520" y="385" font-family="system-ui, sans-serif" font-weight="900" font-size="78" fill="#F0306E">You wear it.</text>
+  <text x="520" y="455" font-family="system-ui, sans-serif" font-weight="600" font-size="32" fill="#4A4678">3D-printed props &amp; cosplay pieces, made to order in India.</text>
+</svg>

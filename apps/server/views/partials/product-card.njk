@@ -1,0 +1,29 @@
+<article class="item">
+  <a class="thumb-link" href="/shop/{{ product.slug }}">
+    <img
+      src="{{ product.image.url }}"
+      alt="{{ product.image.alt }}"
+      width="800"
+      height="600"
+      loading="lazy"
+    >
+  </a>
+  <div class="info">
+    <span class="tag">{{ product.category }}</span>
+    <h3><a href="/shop/{{ product.slug }}">{{ product.name }}</a></h3>
+    <p>{{ product.shortDescription }}</p>
+    <div class="buy">
+      <span class="price">{{ product.minPriceFormatted }}</span>
+      {% if product.primaryVariantId %}
+      <button
+        class="add"
+        type="button"
+        data-add-variant="{{ product.primaryVariantId }}"
+        aria-label="Add {{ product.name }} ({{ product.primaryVariantLabel }}) to cart"
+      >
+        Add to cart
+      </button>
+      {% endif %}
+    </div>
+  </div>
+</article>

@@ -1,0 +1,118 @@
+{% extends "layout.njk" %}
+
+{% block headExtra %}
+  {% if product.images.length > 0 %}
+  <link rel="preload" as="image" href="{{ product.images[0].url }}" fetchpriority="high">
+  {% endif %}
+{% endblock %}
+
+{% block jsonLd %}
+<script type="application/ld+json">{{ productJsonLd | safe }}</script>
+<script type="application/ld+json">{{ breadcrumbJsonLd | safe }}</script>
+{% endblock %}
+
+{% block content %}
+<div class="wrap">
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Home</a>
+    <span aria-hidden="true">/</span>
+    <a href="/shop">Shop</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">{{ product.name }}</span>
+  </nav>
+
+  <article class="product-detail">
+    <div>
+      <div class="gallery-main">
+        <img
+          id="gallery-main-img"
+          src="{{ product.images[0].url }}"
+          alt="{{ product.images[0].alt }}"
+          width="800"
+          height="600"
+          fetchpriority="high"
+        >
+      </div>
+      {% if product.images.length > 1 %}
+      <div class="gallery-thumbs" role="group" aria-label="Product angles">
+        {% for img in product.images %}
+        <button
+          type="button"
+          class="gallery-thumb-btn"
+          data-gallery-src="{{ img.url }}"
+          data-gallery-alt="{{ img.alt }}"
+          aria-pressed="{{ 'true' if loop.first else 'false' }}"
+          aria-label="View angle {{ loop.index }}: {{ img.alt }}"
+        >
+          <img src="{{ img.url }}" alt="" width="160" height="120" loading="lazy">
+        </button>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="product-panel">
+      <span class="tag">{{ product.category }}</span>
+      <h1>{{ product.name }}</h1>
+      <p class="product-price" id="selected-price">
+        {% if product.variants.length > 0 %}
+          {{ product.variants[0].priceFormatted }}
+        {% else %}
+          {{ product.minPriceFormatted }}
+        {% endif %}
+      </p>
+      <p>{{ product.description }}</p>
+
+      <div class="made-note" id="selected-lead">
+        {% if product.variants.length > 0 %}
+          Made to order — usually ships in {{ product.variants[0].leadTimeDays }} days.
+        {% else %}
+          Made to order in {{ store.makerLocation }}.
+        {% endif %}
+      </div>
+
+      {% if product.variants.length > 0 %}
+      <form id="product-add-form">
+        <fieldset class="variant-fieldset">
+          <legend>Choose finish &amp; option</legend>
+          <div class="variant-list">
+            {% for variant in product.variants %}
+            <label class="variant-option" for="variant-{{ variant.id }}">
+              <span>
+                <input
+                  id="variant-{{ variant.id }}"
+                  type="radio"
+                  name="variantId"
+                  value="{{ variant.id }}"
+                  data-price="{{ variant.priceFormatted }}"
+                  data-lead="{{ variant.leadTimeDays }}"
+                  {% if loop.first %}checked{% endif %}
+                >
+                {{ variant.label }}
+              </span>
+              <strong>{{ variant.priceFormatted }}</strong>
+            </label>
+            {% endfor %}
+          </div>
+        </fieldset>
+
+        <div class="qty-row">
+          <label for="product-qty"><strong>Quantity</strong></label>
+          <input
+            id="product-qty"
+            class="qty-input"
+            type="number"
+            name="qty"
+            min="1"
+            max="20"
+            value="1"
+          >
+        </div>
+
+        <button class="btn" type="submit">Add to cart</button>
+      </form>
+      {% endif %}
+    </div>
+  </article>
+</div>
+{% endblock %}

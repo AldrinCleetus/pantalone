@@ -1,0 +1,32 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+<div class="wrap">
+  <section class="page-intro">
+    <h1 class="page-title">Shop</h1>
+    <p class="sub">Made-to-order 3D prints and cosplay pieces shipped across India.</p>
+
+    <nav class="filter-bar" aria-label="Product categories">
+      <a href="/shop" class="chip {% if selectedCategory == 'all' %}active{% endif %}">All ({{ totalCount }})</a>
+      {% for category in categories %}
+        <a
+          href="/shop?category={{ category | urlencode }}"
+          class="chip {% if selectedCategory | lower == category | lower %}active{% endif %}"
+        >
+          {{ category }}
+        </a>
+      {% endfor %}
+    </nav>
+
+    {% if products.length > 0 %}
+      <div class="grid catalog">
+        {% for product in products %}
+          {% include "partials/product-card.njk" %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No active pieces found in this category yet.</p>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}
