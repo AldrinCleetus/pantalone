@@ -40,9 +40,9 @@ storefrontRouter.get("/", async (_req, res) => {
   });
 
   res.render("pages/home.njk", {
-    pageTitle: `${storeConfig.name}: 3D prints and cosplay pieces`,
+    pageTitle: `${storeConfig.name}: Figurines, 3D prints and cosplay pieces`,
     pageDescription:
-      "Made-to-order 3D-printed cosplay props, masks, and desk pieces crafted one at a time in India.",
+      "Made-to-order 3D-printed figurines, cosplay props, masks, and desk pieces crafted one at a time in India.",
     canonicalUrl: `${storeConfig.baseUrl}/`,
     activeNav: "home",
     featuredProducts,
@@ -69,7 +69,7 @@ storefrontRouter.get("/shop", async (req, res) => {
   res.render("pages/shop.njk", {
     pageTitle: `${titlePrefix} — ${storeConfig.name}`,
     pageDescription:
-      "Browse made-to-order 3D-printed masks, props, hardware, and desk pieces shipped across India.",
+      "Browse made-to-order 3D-printed figurines, masks, props, hardware, and desk pieces shipped across India.",
     canonicalUrl,
     activeNav: "shop",
     products,

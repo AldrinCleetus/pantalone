@@ -6,7 +6,7 @@ import { env } from "./env.js";
  */
 export const storeConfig = {
   name: env.STORE_NAME,
-  tagline: "3D-printed props and cosplay pieces, made to order in India.",
+  tagline: "Figurines, 3D-printed props, and cosplay pieces, made to order in India.",
   currency: "INR",
   baseUrl: env.PUBLIC_BASE_URL.replace(/\/+$/, ""),
   mediaBaseUrl: env.R2_PUBLIC_BASE_URL.replace(/\/+$/, ""),

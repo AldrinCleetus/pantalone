@@ -4,7 +4,7 @@
   <rect x="110" y="420" width="340" height="36" rx="10" fill="#1B1648"/>
   <rect x="110" y="456" width="340" height="12" fill="#F0306E"/>
   <path d="M160 420 Q160 200 280 165 Q400 200 400 420Z" fill="#F0306E" stroke="#1B1648" stroke-width="10"/>
-  <text x="520" y="290" font-family="system-ui, sans-serif" font-weight="900" font-size="78" fill="#1B1648">I print it.</text>
-  <text x="520" y="385" font-family="system-ui, sans-serif" font-weight="900" font-size="78" fill="#F0306E">You wear it.</text>
-  <text x="520" y="455" font-family="system-ui, sans-serif" font-weight="600" font-size="32" fill="#4A4678">3D-printed props &amp; cosplay pieces, made to order in India.</text>
+  <text x="520" y="290" font-family="system-ui, sans-serif" font-weight="900" font-size="72" fill="#1B1648">Printed by me.</text>
+  <text x="520" y="380" font-family="system-ui, sans-serif" font-weight="900" font-size="72" fill="#F0306E">Made for you.</text>
+  <text x="520" y="455" font-family="system-ui, sans-serif" font-weight="600" font-size="30" fill="#4A4678">Figurines, props &amp; 3D prints, made to order in India.</text>
 </svg>
